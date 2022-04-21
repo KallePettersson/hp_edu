@@ -98,22 +98,23 @@ router.post("/signup", (req, res) => {
                   .then(user => {
                      const payload = {
                         id: user.id,
-                        user_name: user.user_name
+                        user_name: user.user_name,
+                        isVerified: true
                      };
                      jwt.sign(payload, SECRET, { expiresIn: 3600 }, (err, token) => {
                         if (err) {
                            console.log(err);
                         }
-                        const param = getVerifyEmailParams(user.email, token);
-                        console.log('param =', param, '\n===========');
-                        ses.sendEmail(param, (err, data) => {
-                           if (err) {
-                              console.error('error /signup', err);
-                           } else {
-                              console.log(data);
-                              res.status(200).send('Ett epostmeddelande har skickats till ' + user.email + '.');
-                           }
-                        });
+                        //const param = getVerifyEmailParams(user.email, token);
+                        //console.log('param =', param, '\n===========');
+                        // ses.sendEmail(param, (err, data) => {
+                        //    if (err) {
+                        //       console.error('error /signup', err);
+                        //    } else {
+                        //       console.log(data);
+                        //       res.status(200).send('Ett epostmeddelande har skickats till ' + user.email + '.');
+                        //    }
+                        // });
                      });
                   })
                   .catch(err =>
